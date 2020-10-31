@@ -1,6 +1,6 @@
 <?php
 
-namespace Hasnhasan\LaravelSwagger\Parameters;
+namespace hasnhasan\LaravelSwagger\Parameters;
 
 class BodyParameterGenerator implements ParameterGenerator
 {

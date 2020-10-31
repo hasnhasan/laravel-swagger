@@ -6,7 +6,7 @@ This package scans your laravel project's routes and auto generates a Swagger 2.
 
 The package can easily be installed by running `composer require hasnhasan/laravel-swagger` in your project's root folder.
 
-If you are running a version of Laravel < 5.5 also make sure you add `Hasnhasan\LaravelSwagger\SwaggerServiceProvider::class` to the `providers` array in `config/app.php`.
+If you are running a version of Laravel < 5.5 also make sure you add `hasnhasan\LaravelSwagger\SwaggerServiceProvider::class` to the `providers` array in `config/app.php`.
 
 This will register the artisan command that will be available to you.
 
