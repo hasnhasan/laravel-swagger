@@ -1,0 +1,38 @@
+{
+    "name": "hasnhasan/laravel-swagger",
+    "description": "Auto generates the swagger documentation for a laravel project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hasan Özsezgin",
+            "email": "hasan.ozsezgin@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "orchestra/testbench": "~3.0",
+        "phpunit/phpunit": "6.*"
+    },
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "hasnhasan\\LaravelSwagger\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "hasnhasan\\LaravelSwagger\\Tests\\": "tests/"
+        }
+    },
+    "suggest": {
+        "ext-yaml": "Required to use the YAML output option"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "hasnhasan\\LaravelSwagger\\SwaggerServiceProvider"
+            ]
+        }
+    }
+}
