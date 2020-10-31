@@ -223,7 +223,8 @@ class Generator
     protected function addTags($controllerArray)
     {
 
-        $tagName                                                  = $this->getControllerName($controllerArray);
+        $tagName = $this->getControllerName($controllerArray);
+
         $this->docs['paths'][$this->uri][$this->method]['tags'][] = $tagName;
     }
 
@@ -234,13 +235,9 @@ class Generator
             return null;
         }
 
-        if (!$controllerArray['namespace']) {
-            $controllerArray['namespace'] = current(explode('@', $controllerArray['controller']));
-        }
-
-        $namespaceReplaced = str_replace($controllerArray['namespace'].'\\', '', $controllerArray['controller']);
-
-        $actionNameReplaced  = substr($namespaceReplaced, 0, strpos($namespaceReplaced, '@'));
+        $controller          = explode('\\', $controllerArray['controller']);
+        $controller          = array_pop($controller);
+        $actionNameReplaced  = substr($controller, 0, strpos($controller, '@'));
         $controllerReplaced  = str_replace('Controller', '', $actionNameReplaced);
         $controllerNameArray = preg_split('/(?=[A-Z])/', $controllerReplaced);
         $controllerName      = trim(implode(' ', $controllerNameArray));
