@@ -175,11 +175,12 @@ class Generator
 
         $parsedAction = Str::parseCallback($this->action);
 
-        $reflector  = (new ReflectionMethod($parsedAction[0], $parsedAction[1]));
+        $reflector = (new ReflectionMethod($parsedAction[0], $parsedAction[1]));
+
         $parameters = $reflector->getParameters();
         $docComment = $reflector->getDocComment();
-
         if ($docComment) {
+            $this->addResponse($docComment);
             $this->addDescription($docComment);
         }
 
@@ -191,9 +192,52 @@ class Generator
         }
     }
 
+    protected function addResponse($docComment)
+    {
+
+        if (preg_match('# @response(.*?)\n#s', $docComment, $response)) {
+            $response = trim($response[1]);
+
+            $example = [
+                'application/json' => [
+                    'status' => true,
+                    'data'   => json_decode($response, 1),
+                ],
+            ];
+
+            $this->docs['paths'][$this->uri][$this->method]['responses']['200']['examples'] = $example;
+
+            return;
+        }
+
+        if (!preg_match('# @resource(.*?)\n#s', $docComment, $resource)) {
+            return;
+        }
+
+        if (!preg_match('# @model(.*?)\n#s', $docComment, $model)) {
+            return;
+        }
+        $resource = trim(end($resource));
+        $model    = trim(end($model));
+        $model    = new $model;
+
+        $response = (new $resource($model))->toArray(request());
+
+        $example = [
+            'application/json' => [
+                'status' => true,
+                'data'   => $response,
+            ],
+        ];
+
+        $this->docs['paths'][$this->uri][$this->method]['responses']['200']['examples'] = $example;
+
+    }
+
     protected function addDescription($docComment)
     {
-        $docComment                                                    = $this->getDescription($docComment);
+        $docComment = $this->getDescription($docComment);
+
         $this->docs['paths'][$this->uri][$this->method]['description'] = $docComment;
     }
 
