@@ -185,6 +185,9 @@ class Generator
         }
 
         foreach ($parameters as $parameter) {
+            if (!$parameter->getType()) {
+                continue;
+            }
             $class = $parameter->getType()->getName();
             if (is_subclass_of($class, FormRequest::class)) {
                 return (new $class)->rules();
