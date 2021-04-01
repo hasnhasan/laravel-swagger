@@ -8,6 +8,9 @@
             "email": "hasan.ozsezgin@gmail.com"
         }
     ],
+    "require": {
+        "laravel/helpers": "^1.4",
+    },
     "require-dev": {
         "orchestra/testbench": "~3.0",
         "phpunit/phpunit": "6.*"
